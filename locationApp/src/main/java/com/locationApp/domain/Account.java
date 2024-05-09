@@ -41,6 +41,19 @@ public class Account {
 		super();
 		this.name = name;
 	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [accountId=" + accountId + ", name=" + name + "]";
+	}
 	
 	
 	

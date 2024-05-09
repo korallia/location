@@ -1,5 +1,6 @@
 package com.locationApp.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -11,9 +12,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Piece {
 
-	public Piece() {
-		// TODO Auto-generated constructor stub
-	}
+	
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
@@ -26,17 +25,28 @@ public class Piece {
 	private String etage;
 	
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="immeuble")
-	private Logement immeuble;
 	
 	
-	public Logement getImmeuble() {
-		return immeuble;
+	public Piece(String nom, int taille, int hauteur, int largeur, String etage) {
+		super();
+		this.nom = nom;
+		this.taille = taille;
+		this.hauteur = hauteur;
+		this.largeur = largeur;
+		this.etage = etage;
 	}
-	public void setImmeuble(Logement immeuble) {
-		this.immeuble = immeuble;
+	
+	public Piece() {
+		super();
 	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getNom() {
 		return nom;
 	}
@@ -58,6 +68,7 @@ public class Piece {
 	public void setHauteur(int hauteur) {
 		this.hauteur = hauteur;
 	}
+	
 	public int getLargeur() {
 		return largeur;
 	}
@@ -70,16 +81,15 @@ public class Piece {
 	public void setEtage(String etage) {
 		this.etage = etage;
 	}
-	public Piece(String nom, int taille, int hauteur, int largeur, String etage, Logement immeuble) {
-		super();
-		this.nom = nom;
-		this.taille = taille;
-		this.hauteur = hauteur;
-		this.largeur = largeur;
-		this.etage = etage;
-		this.immeuble = immeuble;
+
+	@Override
+	public String toString() {
+		return "Piece [id=" + id + ", nom=" + nom + ", taille=" + taille + ", hauteur=" + hauteur + ", largeur="
+				+ largeur + ", etage=" + etage + "]";
 	}
 	
+	
+
 	
 	
 	

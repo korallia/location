@@ -6,6 +6,7 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,13 +32,13 @@ public class Logement {
 		
 		//to do historique (sprint 2 pour le chat)
 		//to do photos
-		//to do fiche
 		
 		
-		@OneToMany(cascade=CascadeType.ALL,mappedBy="immeuble")
-		private  List<Piece> pieces;
+		@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+		@JoinColumn(name = "logement_id")
+		private  Set<Piece> pieces;
 
-		@ManyToMany(cascade=CascadeType.PERSIST)
+		@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.PERSIST)
 		@JoinTable(name="logements_locataire",joinColumns=
 			
 				{
@@ -48,14 +49,13 @@ public class Logement {
 				
 			}
 		
-				)
-		
+				)		
 		private Set<Locataire> locataires;
 		
 		
-		
-		
-		@ManyToMany(cascade=CascadeType.PERSIST)
+
+
+		@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.PERSIST)
 		@JoinTable(name="logements_proprietaire",joinColumns=
 			
 				{
@@ -67,23 +67,29 @@ public class Logement {
 			}
 		
 				)
-		
+				
 		private Set<Proprietaire> proprietaires;
 		
-	
+		
+		
 
 
-		public List<Piece> getPieces() {
-			return pieces;
+
+		@Override
+		public String toString() {
+			return "Logement [logementId=" + logementId + ", loyer=" + loyer + ", surface=" + surface + ", pays=" + pays
+					+ ", province=" + province + ", ville=" + ville + ", adresse=" + adresse + ", codePostal="
+					+ codePostal + ", description=" + description + ", nom=" + nom + ", pieces=" + pieces
+					+ ", locataires=" + locataires + ", proprietaires=" + proprietaires + "]";
 		}
 
 
-		
+
 
 		public Logement(int loyer, int surface, String pays, String province, String ville, String adresse,
-				String codePostal, String description, String nom, List<Piece> pieces, Set<Locataire> locataires,
+				String codePostal, String description, String nom, Set<Locataire> locataires,
 				Set<Proprietaire> proprietaires) {
-			super();
+			super(); 
 			this.loyer = loyer;
 			this.surface = surface;
 			this.pays = pays;
@@ -97,11 +103,61 @@ public class Logement {
 			this.locataires = locataires;
 			this.proprietaires = proprietaires;
 		}
+		
+		
+
+
+		public Logement(int loyer, int surface, String pays, String province, String ville, String adresse,
+				String codePostal, String description, String nom, Set<Locataire> locataires) {
+			super();
+			this.loyer = loyer;
+			this.surface = surface;
+			this.pays = pays;
+			this.province = province;
+			this.ville = ville;
+			this.adresse = adresse;
+			this.codePostal = codePostal;
+			this.description = description;
+			this.nom = nom;
+			this.locataires = locataires;
+		}
+
+
+
+		public Logement() {
+			super();
+		}
+		
+		
 
 
 
 
-		public void setPieces(List<Piece> pieces) {
+		public Logement(int loyer, int surface, String pays, String province, String ville,
+				String adresse, String codePostal, String description, String nom) {
+			super();
+			this.loyer = loyer;
+			this.surface = surface;
+			this.pays = pays;
+			this.province = province;
+			this.ville = ville;
+			this.adresse = adresse;
+			this.codePostal = codePostal;
+			this.description = description;
+			this.nom = nom;
+		}
+
+
+
+		public Set<Piece> getPieces() {
+			return pieces;
+		}
+
+
+
+
+
+		public void setPieces(Set<Piece> pieces) {
 			this.pieces = pieces;
 		}
 
@@ -124,30 +180,6 @@ public class Logement {
 		public void setLoyer(int loyer) {
 			this.loyer = loyer;
 		}
-
-
-		
-
-		public Logement(int loyer, int surface, String pays,
-				String province, String ville, String adresse, String codePostal, String description, String nom) {
-			super();
-			this.loyer = loyer;
-			this.surface = surface;
-			this.pays = pays;
-			this.province = province;
-			this.ville = ville;
-			this.adresse = adresse;
-			this.codePostal = codePostal;
-			this.description = description;
-			this.nom = nom;
-		}
-		
-		public Logement() {
-			super();
-		}
-
-
-
 
 		public int getSurface() {
 			return surface;
@@ -218,13 +250,7 @@ public class Logement {
 		public void setCodePostal(String codePostal) {
 			this.codePostal = codePostal;
 		}
-
-
-
-
-
-	
-
-
+		
+		
 
 }

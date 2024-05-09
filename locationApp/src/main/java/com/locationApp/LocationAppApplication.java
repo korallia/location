@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.awt.Dimension;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class LocationAppApplication implements CommandLineRunner {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(LocationAppApplication.class);
 	
-	private final ImmeubleRepository immeubleRepository;
+	private final LogementRepository logementRepository;
 	private final PieceRepository pieceRepository;
 	private final AccountRepository accountRepository;
 	private final LocataireRepository locationRepository;
@@ -31,9 +32,9 @@ public class LocationAppApplication implements CommandLineRunner {
 
 	
 
-	public LocationAppApplication(ImmeubleRepository immeubleRepository, PieceRepository pieceRepository,
+	public LocationAppApplication(LogementRepository logementRepository, PieceRepository pieceRepository,
 			AccountRepository accountRepository, LocataireRepository locationRepository,ProprietaireRepository proprietaireRepository) {
-		this.immeubleRepository = immeubleRepository;
+		this.logementRepository = logementRepository;
 		this.pieceRepository = pieceRepository;
 		this.accountRepository = accountRepository;
 		this.locationRepository = locationRepository;
@@ -59,24 +60,33 @@ public class LocationAppApplication implements CommandLineRunner {
 		Set<Proprietaire> proprietaires = new HashSet<>();
 		proprietaires.add(proprietaire);
 		
+		Set<Piece> pieces = new HashSet<>();
+		Piece piece1 = new Piece("test1",200,10,20,"1");
+		Piece piece2 = new Piece("test2",200,10,20,"2");
+		pieces.add(piece1);
+		pieces.add(piece2);
 		
-		Logement immeuble1 = new Logement(1000,1200,"canada","qc","ville","adress","codepostal","description","test1",null, locataires,proprietaires);
+		
+		Logement immeuble1 = new Logement(1000,1200,"canada","qc","ville","adress","codepostal","description","test1", locataires,proprietaires);
+		immeuble1.setPieces(pieces);
 		
 		
 		
+		logementRepository.save(immeuble1);
 		
+		Optional<Logement> logement = logementRepository.findById((long) 1);
+				System.out.println(logement.get());
 		
-		immeubleRepository.save(immeuble1);
-		
+		/*
 		immeubleRepository.save(immeuble2);
 		
 		locationRepository.save(locataire);
 		
 		immeubleRepository.save(new Logement(1000,1200,"canada","qc","ville","adress","codepostal","description","test3"));
+		*/
 		
-		
-		pieceRepository.save(new Piece("test1",200,10,20,"1",immeuble1));
-		pieceRepository.save(new Piece("test2",200,10,20,"2",immeuble1));
+		//pieceRepository.save(new Piece("test1",200,10,20,"1"));
+		//pieceRepository.save(new Piece("test2",200,10,20,"2"));
 		
 		
 		

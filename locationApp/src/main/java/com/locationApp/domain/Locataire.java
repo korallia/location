@@ -31,7 +31,12 @@ public class Locataire {
 
 	private String name;
 	
-	
+	@OneToOne
+	@JoinColumn(name="accountid")
+	private Account account;
+
+	@ManyToMany(fetch = FetchType.EAGER,mappedBy="locataires")
+	private Set<Logement> logements;
 	
 	public Locataire(String name,Account account) {
 		super();
@@ -66,12 +71,7 @@ public class Locataire {
 		this.account = account;
 	}
 
-	@OneToOne
-	@JoinColumn(name="accountid")
-	private Account account;
-
-	@ManyToMany(mappedBy="locataires")
-	private Set<Logement> logements;
+	
 
 	public Set<Logement> getLogements() {
 		return logements;
@@ -80,5 +80,14 @@ public class Locataire {
 	public void setLogements(Set<Logement> logements) {
 		this.logements = logements;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Locataire [locataireId=" + locataireId + ", name=" + name + ", account=" + account +  "]";
+	}
+	
+	
 
 }

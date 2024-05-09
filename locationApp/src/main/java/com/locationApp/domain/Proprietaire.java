@@ -27,30 +27,40 @@ public class Proprietaire {
 
 	private String name;
 	
-	
-	
 
 
+	@OneToOne
+	@JoinColumn(name="account_id")
+	private Account account;
+	
+	
+	@ManyToMany(mappedBy="proprietaires")
+	private Set<Logement> logements;
+
+	
 	public Proprietaire(String name, Account account) {
 		super();
 		this.name = name;
 		this.account = account;
 	}
+	
+	
 
-	@OneToOne
-	@JoinColumn(name="account_id")
-	private Account account;
-/*
-	@ManyToMany(mappedBy="locataires")
-	private Set<Logement> logements;
-
-	public Set<Logement> getLogements() {
-		return logements;
+	public Proprietaire() {
+		super();
 	}
 
-	public void setLogements(Set<Logement> logements) {
-		this.logements = logements;
+
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "Proprietaire [proprietaireId=" + proprietaireId + ", name=" + name + ", account=" + account +"]";
 	}
-	*/
+	
+	
 
 }
