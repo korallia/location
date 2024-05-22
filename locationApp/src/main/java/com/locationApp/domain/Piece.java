@@ -17,7 +17,7 @@ public class Piece {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
-	
+	 
 	private String nom;
 	private int taille;
 	private int hauteur;

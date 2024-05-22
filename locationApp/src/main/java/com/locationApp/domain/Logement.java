@@ -4,6 +4,8 @@ package com.locationApp.domain;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,6 +41,7 @@ public class Logement {
 		private  Set<Piece> pieces;
 
 		@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.PERSIST)
+		@JsonBackReference
 		@JoinTable(name="logements_locataire",joinColumns=
 			
 				{
@@ -56,6 +59,7 @@ public class Logement {
 
 
 		@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.PERSIST)
+		@JsonBackReference
 		@JoinTable(name="logements_proprietaire",joinColumns=
 			
 				{
@@ -79,8 +83,7 @@ public class Logement {
 		public String toString() {
 			return "Logement [logementId=" + logementId + ", loyer=" + loyer + ", surface=" + surface + ", pays=" + pays
 					+ ", province=" + province + ", ville=" + ville + ", adresse=" + adresse + ", codePostal="
-					+ codePostal + ", description=" + description + ", nom=" + nom + ", pieces=" + pieces
-					+ ", locataires=" + locataires + ", proprietaires=" + proprietaires + "]";
+					+ codePostal + ", description=" + description + ", nom=" + nom + ", pieces=" + pieces + "]";
 		}
 
 
@@ -121,6 +124,29 @@ public class Logement {
 			this.nom = nom;
 			this.locataires = locataires;
 		}
+		
+		
+
+
+
+		public Logement(int loyer, int surface, String pays, String province, String ville, String adresse,
+				String codePostal, String description, String nom, Set<Piece> pieces, Set<Locataire> locataires,
+				Set<Proprietaire> proprietaires) {
+			super();
+			this.loyer = loyer;
+			this.surface = surface;
+			this.pays = pays;
+			this.province = province;
+			this.ville = ville;
+			this.adresse = adresse;
+			this.codePostal = codePostal;
+			this.description = description;
+			this.nom = nom;
+			this.pieces = pieces;
+			this.locataires = locataires;
+			this.proprietaires = proprietaires;
+		}
+
 
 
 
@@ -249,6 +275,20 @@ public class Logement {
 
 		public void setCodePostal(String codePostal) {
 			this.codePostal = codePostal;
+		}
+
+
+
+
+		public Long getLogementId() {
+			return logementId;
+		}
+
+
+
+
+		public void setLogementId(Long logementId) {
+			this.logementId = logementId;
 		}
 		
 		

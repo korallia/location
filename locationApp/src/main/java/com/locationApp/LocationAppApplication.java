@@ -3,6 +3,7 @@ package com.locationApp;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
 
 import java.awt.Dimension;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.locationApp.domain.*;
 
 @SpringBootApplication
+@Configuration
 public class LocationAppApplication implements CommandLineRunner {
 	
 	private static final Logger logger = 
@@ -67,16 +69,26 @@ public class LocationAppApplication implements CommandLineRunner {
 		pieces.add(piece2);
 		
 		
-		Logement immeuble1 = new Logement(1000,1200,"canada","qc","ville","adress","codepostal","description","test1", locataires,proprietaires);
-		immeuble1.setPieces(pieces);
+		Logement immeuble1 = new Logement(1000,1200,"canada","qc","ville","adress","codepostal","description","test1", pieces,locataires,proprietaires);
+		//immeuble1.setPieces(pieces);
 		
 		
 		
 		logementRepository.save(immeuble1);
+		Iterable<Proprietaire> logements = proprietaireRepository.findAll();
+		 for (Proprietaire logement1 : logements) {
+			 System.out.println(logement1); 
+		 }
 		
+		/*
 		Optional<Logement> logement = logementRepository.findById((long) 1);
-				System.out.println(logement.get());
+				//System.out.println(logement.get());
 		
+				Iterable<Logement> logements = logementRepository.findAll();
+				 for (Logement logement1 : logements) {
+					 System.out.println(logement1); 
+				 }
+				 */
 		/*
 		immeubleRepository.save(immeuble2);
 		
