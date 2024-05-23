@@ -26,18 +26,14 @@ public class LogementControlleur {
 	private final LogementRepository repository;
 
 	
-	
+	/*
 	@GetMapping("/logements")
 	public Iterable<Logement> getLogements(){
 		return repository.findAll();
 		
 	}
+	*/
 	
-	@GetMapping("/logements/{id}")
-	public Optional<Logement> getLogementbyId(@PathVariable("id")  Long id){
-		return repository.findById(id);
-		
-	}
 	
 	
 	
